@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <doc>
-    <assembly>
-        <name>ConsoleApp1</name>
-    </assembly>
-    <members>
-        <member name="M:ConsoleApp1.Person.MakeFriendsWith(ConsoleApp1.Person)">
-            <summary>
-				This is a method that makes friends with <paramref name="person" />
-			</summary><param name="person" /><returns>It returns a list of friends as a string</returns>
-        </member>
-    </members>
+	<assembly>
+		<name>ConsoleApp1</name>
+	</assembly>
+	<members>
+		<member name="PersonCls">
+			<MakeFriendsWith>
+				<summary>
+					This method makes friends with another person.
+				</summary>
+				<param name="person">The person to make friends with.</param>
+			</MakeFriendsWith>
+		</member>
+	</members>
 </doc>

@@ -44,6 +44,7 @@ namespace ConsoleApp1
 
         public void DisplayInfo() => Console.WriteLine($"Name: {Name}\nAge: {Age}");
 
+        /// <include file='./XMLFile1.xml' path='doc/members/member[@name="PersonCls"]/MakeFriendsWith/*'/>
         public void MakeFriendsWith(Person person)
         {
             if (person == null)
@@ -112,8 +113,6 @@ namespace ConsoleApp1
 
             #endregion        
             Line();
-
-
 
         }
     }
