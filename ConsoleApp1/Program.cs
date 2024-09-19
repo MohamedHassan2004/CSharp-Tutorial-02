@@ -44,7 +44,6 @@ namespace ConsoleApp1
 
         public void DisplayInfo() => Console.WriteLine($"Name: {Name}\nAge: {Age}");
 
-        /// <include file='demo.xml' path='docs/members[@name="demo"]/MakeFriendsWith/*'/>
         public void MakeFriendsWith(Person person)
         {
             if (person == null)
