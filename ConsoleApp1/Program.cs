@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Reflection;
 
 namespace ConsoleApp1
 {
@@ -42,6 +40,15 @@ namespace ConsoleApp1
             friendsHashCodes = new HashSet<int>();
         }
 
+        // destructor
+        ~Person()
+        {
+            friends.Clear();
+            friendsHashCodes.Clear();
+            Console.WriteLine("destructor");
+        }
+
+        public override string ToString() => $"Name: {Name} , Age: {Age}";
         public void DisplayInfo() => Console.WriteLine($"Name: {Name}\nAge: {Age}");
         public void MakeFriendsWith(Person person)
         {
@@ -111,8 +118,57 @@ namespace ConsoleApp1
 
             #endregion        
             Line();
-            
+            #region GC
+            // Display the total memory allocated by the application before garbage collection
+            Console.WriteLine($"before GC: {GC.GetTotalMemory(false)}");
 
+            // Force a garbage collection to occur
+            GC.Collect();
+
+            // Wait for all finalizers to complete before continuing
+            GC.WaitForPendingFinalizers();
+
+            // Display the total memory allocated by the application after garbage collection
+            Console.WriteLine($"after GC : {GC.GetTotalMemory(true)}");
+            #endregion
+            Line();
+            #region Reflection
+            // Get the type of a class
+            Type personType = typeof(Person);
+
+            // Display the name of the type
+            Console.WriteLine($"Type: {personType.Name}");
+
+            // Get and display the properties of the type
+            PropertyInfo[] properties = personType.GetProperties();
+            Console.WriteLine("Properties:");
+            foreach (var prop in properties)
+                Console.WriteLine($" - {prop.Name} ({prop.PropertyType.Name})");
+
+            // Get and display the methods of the type
+            MethodInfo[] methods = personType.GetMethods();
+            Console.WriteLine("Methods:");
+            foreach (var method in methods)
+                Console.WriteLine($" - {method.Name}");
+
+            // Create an instance of the type
+            object personInstance = Activator.CreateInstance(personType, "John", 25);
+
+            // Set a property value
+            PropertyInfo nameProperty = personType.GetProperty("Name");
+            nameProperty.SetValue(personInstance, "Jane");
+
+            // Get a property value
+            string name = (string)nameProperty.GetValue(personInstance);
+            Console.WriteLine($"Name: {name}");
+
+            // Invoke a method
+            //public object Invoke(object obj, object[] parameters);
+            MethodInfo displayInfoMethod = personType.GetMethod("DisplayInfo");
+            displayInfoMethod.Invoke(personInstance, null);
+            #endregion
+            Line();
+            
 
         }
     }
