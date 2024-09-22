@@ -1,1 +1,2 @@
-# ConsoleApp1
+# Solution2
+this solution for practice on advanced topics in C#
