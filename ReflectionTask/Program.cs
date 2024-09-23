@@ -21,7 +21,7 @@ namespace ReflectionTask
         static int ReadValidInt(string prompt)
         {
             int result;
-            string input;
+            string? input;
             do
             {
                 Console.Write(prompt);
@@ -38,7 +38,7 @@ namespace ReflectionTask
                 Console.WriteLine(method);
 
             Console.WriteLine("Write the method you want:");
-            string inputMethod = Console.ReadLine();
+            string? inputMethod = Console.ReadLine();
 
             // Array.Exists(array , condition[lambda expression]))
             if (!Array.Exists(Methods, method => method.Equals(inputMethod,StringComparison.OrdinalIgnoreCase))){
@@ -46,7 +46,7 @@ namespace ReflectionTask
                 return;
             }
 
-            MethodInfo methodInfo = typeof(MathOperations).GetMethod(inputMethod);
+            MethodInfo? methodInfo = typeof(MathOperations).GetMethod(inputMethod ?? string.Empty);
 
             if (methodInfo == null){
                 Console.WriteLine("method not found");
@@ -58,7 +58,7 @@ namespace ReflectionTask
             object[] parameters = new object[] { firstNumber, secondNumber };
 
             try{
-                object result = methodInfo.Invoke(new MathOperations(), parameters);
+                object? result = methodInfo?.Invoke(new MathOperations(), parameters);
                 Console.WriteLine($"Answer => {result}");
             }catch (TargetInvocationException ex){
                 Console.WriteLine($"An error occurred: {ex.InnerException?.Message}");

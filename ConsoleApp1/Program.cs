@@ -34,8 +34,8 @@ namespace ConsoleApp1
 
         public Person(string name, int age)
         {
-            Name = name;
-            Age = age;
+            this.name = name;
+            this.age = age;
             friends = new List<string>();
             friendsHashCodes = new HashSet<int>();
         }
@@ -76,8 +76,16 @@ namespace ConsoleApp1
     #endregion
 
     #region DateTimeExtension
+    /// <summary>
+    /// Provides extension methods for the DateTime structure.
+    /// </summary>
     public static class DateTimeExtensions
     {
+        /// <summary>
+        /// Calculates the number of days until the end of the year from the specified date.
+        /// </summary>
+        /// <param name="dateTime">The date from which to calculate the days until the end of the year.</param>
+        /// <returns>The number of days until the end of the year.</returns>
         public static int DaysUntilEndOfYear(this DateTime dateTime)
         {
             DateTime endOfYear = new DateTime(dateTime.Year, 12, 31);
@@ -85,6 +93,7 @@ namespace ConsoleApp1
         }
     }
     #endregion
+
 
     internal class Program
     {
@@ -152,24 +161,26 @@ namespace ConsoleApp1
                 Console.WriteLine($" - {method.Name}");
 
             // Create an instance of the type
-            object personInstance = Activator.CreateInstance(personType, "John", 25);
+            object? personInstance = Activator.CreateInstance(personType, "John", 25);
 
             // Set a property value
-            PropertyInfo nameProperty = personType.GetProperty("Name");
-            nameProperty.SetValue(personInstance, "Jane");
+            PropertyInfo? nameProperty = personType.GetProperty("Name");
+            nameProperty?.SetValue(personInstance, "Jane");
 
             // Get a property value
-            string name = (string)nameProperty.GetValue(personInstance);
+            string? name = nameProperty?.GetValue(personInstance) as string;
             Console.WriteLine($"Name: {name}");
 
             // Invoke a method
             //public object Invoke(object obj, object[] parameters);
-            MethodInfo displayInfoMethod = personType.GetMethod("DisplayInfo");
-            displayInfoMethod.Invoke(personInstance, null);
+            MethodInfo? displayInfoMethod = personType?.GetMethod("DisplayInfo");
+            displayInfoMethod?.Invoke(personInstance, null);
             #endregion
             Line();
             
-
         }
     }
+
+
 }
+
